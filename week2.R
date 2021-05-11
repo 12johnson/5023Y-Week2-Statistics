@@ -36,6 +36,64 @@ darwin %>%
 ### plots a dotplot comparing the heights of cross and self-pollinated maize plants
 ### plot suggests that the mean height may be taller for cross-pollinated than self-pollinated (inbred)
 
+model1 <- lm(height~1, data=darwin)
+model1
+
+### code calculates the mean height, we can now use this value as an intercept in our dotplot
+### mean calculated was 18.88
+
+darwin %>% 
+  ggplot(aes(x=type, 
+             y=height))+
+  geom_jitter(width=0.1, 
+              pch=21, 
+              aes(fill=type))+
+  theme_classic()+
+  geom_abline(intercept=18.88, 
+              slope=0, 
+              linetype="dashed")
+
+### adds dashed line indicating the mean height of all plants to the dotplot
+
+darwin %>% 
+  summarise(mean=mean(height))
+
+### code calculates the mean Height to confirm result from lm() function
+### mean calculated was 18.9 which confirms the mean is accurately estimated
+
+model2 <- lm(height~type, data=darwin)
+model2
+
+### this linear model analyses a dependent variable (height) as a function 
+### of a categorical independent variable (type of pollination)
+### values calculated is a new intercept 20.192 and a slope -2.617
+### this slope indicates the difference between the mean heights for cross and self-pollinated
+### 20.192 is the mean for cross-pollinated 
+### and 20.192-2.617= 17.575 is the mean for self-pollinated (indicated by -2.617 being under typeself)
+
+model3 <- lm(height~1+type, data=darwin)
+model3
+
+### this code produces the same output as model 2
+
+darwin %>% 
+  ggplot(aes(x=type, 
+             y=height))+
+  geom_jitter(width=0.1, 
+              pch=21, 
+              aes(fill=type))+
+  theme_classic()+
+  geom_segment(aes(x=1, xend=2, y=20.192, yend=20.192-2.617), linetype="dashed")+
+  stat_summary(fun.y=mean, geom="crossbar", width=0.2)
+
+### plots a dotplot with an a dashed line connecting the two means
+### code manually specifies two means and includes their values 
+### so R does not create an average as shown in previous graph
+
+
+
+
+
 
 
 
