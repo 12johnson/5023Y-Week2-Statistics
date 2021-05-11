@@ -1,5 +1,6 @@
 library(tidyverse)
 library(skimr)
+library(rstatix)
 
 ### adding in packages which are used in the script
 
@@ -90,11 +91,29 @@ darwin %>%
 ### code manually specifies two means and includes their values 
 ### so R does not create an average as shown in previous graph
 
+summary(model2)
 
+### produces test statistics. 
 
+anova_test(height~type, data=darwin)
 
+### ANOVA test matches the last line of the summary() data confirming it is accurate.
+### signal-to-noise ratio F= 5.9, p value = 0.02
 
+pf(q=5.9395, df1=1, df2=28, lower.tail=FALSE)
 
+### we can replicate this result with the pf() which is why it is vital 
+### that when you report results, you always report the test-statistic (here F), 
+### degrees of freedom (df) and P-value together, 
+### Your significance or probability value can only be calculated/
+### checked when we have the sample size and signal-to-noise ratio.
 
+### the p value shows that it is a 2% chance that we have produced a false positive
+### 5% is the cut off, so...
 
+### we can reject the null hypothesis that there is no difference between the height of
+### cross and self-pollinated maize and assume H1 to be correct.
 
+###The cross-pollinated plants were on average significantly taller (20.2 inches)
+###than the self pollinated plants (17.5 inches) F1,28= 5.94, P = 0.02.
+### above is an example of the write up you would use in a paper.
