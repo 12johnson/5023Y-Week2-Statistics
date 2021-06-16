@@ -87,7 +87,7 @@ darwin %>%
   geom_segment(aes(x=1, xend=2, y=20.192, yend=20.192-2.617), linetype="dashed")+
   stat_summary(fun.y=mean, geom="crossbar", width=0.2)
 
-### plots a dotplot with an a dashed line connecting the two means
+### plots a dotplot with a dashed line connecting the two means
 ### code manually specifies two means and includes their values 
 ### so R does not create an average as shown in previous graph
 
@@ -101,6 +101,14 @@ anova_test(height~type, data=darwin)
 ### signal-to-noise ratio F= 5.9, p value = 0.02
 
 pf(q=5.9395, df1=1, df2=28, lower.tail=FALSE)
+
+### the code above tests the null hypothesis by calculating the p value. 
+### the code is to see the probability of the F statistic hence pf() 
+### the signal-to-nose ratio is the F statistic but is
+### represented as q in this code
+### F statistic and df and P-value must be given together
+### as the F statistic and df are required to check the P-value.
+
 
 ### we can replicate this result with the pf() which is why it is vital 
 ### that when you report results, you always report the test-statistic (here F), 
